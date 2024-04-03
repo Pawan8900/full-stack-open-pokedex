@@ -13,7 +13,7 @@ describe('Pokedex', () => {
     await expect(page.getByText('chlorophyll')).toBeVisible()
   })
 
-  test.only('navigating to home from any pokemon page returns home window', async ({ page }) => {
+  test('navigating to home from any pokemon page returns home window', async ({ page }) => {
     await page.goto('/pokemon/ivysaur')
     const locator = await page.getByRole('link', { name: 'Home' })
     await expect(locator).toBeVisible()
