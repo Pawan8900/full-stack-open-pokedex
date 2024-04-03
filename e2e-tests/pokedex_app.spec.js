@@ -8,7 +8,7 @@ describe('Pokedex', () => {
     await expect(page.getByText('Pokémon and Pokémon character names are trademarks of Nintendo.')).toBeVisible()
   })
 
-  test.only('navigating to link opens up proper content', async ({ page }) => {
+  test('navigating to link opens up proper content', async ({ page }) => {
     await page.goto('/pokemon/ivysaur')
     await expect(page.getByText('chlorophyll')).toBeVisible()
   })
