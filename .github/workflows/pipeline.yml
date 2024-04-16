@@ -26,19 +26,33 @@ jobs:
         run: npm run build
       - name: test
         run: npm run test
-      - name: Test Deployment Success
+      - name: Pull request Success
         uses: rjstone/discord-webhook-notify@v1
-        if: success()
+        if: ${{ success() && github.event_name == 'pull_request'}}
         with:
           severity: info
-          details: Deployment Succeeded!
+          details: Pull request Succeeded!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      - name: Test Deployment Failure
+      - name: Pull request Failure
         uses: rjstone/discord-webhook-notify@v1
-        if: failure()
+        if: ${{ failure() && github.event_name == 'pull_request'}}
+        with:
+          severity: info
+          details: Pull Request Failed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Merge prpcess Success
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ success() && github.event_name == 'push'}}
+        with:
+          severity: info
+          details: Merge Process Succeeded!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Merge Process Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ failure() && github.event_name == 'push'}}
         with:
           severity: error
-          details: Deployment Failed!
+          details: Merge Process Failed!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   test:
@@ -86,5 +100,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
         if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message), '#skip') == false }}
-
-    
