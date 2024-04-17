@@ -1,17 +1,8 @@
 name: Periodic Health Check
 
-# on:
-#   schedule:
-#     - cron: '0 * * * *'
-
-
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize]
+  schedule:
+    - cron: "35 10 * * *"
 
 jobs:
   health_check_on_earth:
